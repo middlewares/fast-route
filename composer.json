@@ -1,0 +1,50 @@
+{
+    "name": "middlewares/fast-route",
+    "type": "library",
+    "description": "Middleware to use FastRoute",
+    "license": "MIT",
+    "keywords": [
+        "psr-7",
+        "psr-15",
+        "middleware",
+        "server",
+        "http",
+        "router",
+        "fastRoute",
+        "fast-route"
+    ],
+    "homepage": "https://github.com/middlewares/fast-route",
+    "support": {
+        "issues": "https://github.com/middlewares/fast-route/issues"
+    },
+    "require": {
+        "php": "^5.6 || ^7.0",
+        "http-interop/http-middleware": "^0.2",
+        "nikic/fast-route": "^1.0",
+        "middlewares/utils": "~0.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.5",
+        "zendframework/zend-diactoros": "^1.3",
+        "friendsofphp/php-cs-fixer": "^1.12",
+        "squizlabs/php_codesniffer": "^2.7",
+        "mindplay/middleman": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Middlewares\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Middlewares\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": [
+            "phpunit",
+            "phpcs"
+        ],
+        "cs-fix": "php-cs-fixer fix . --fixers=-psr0"
+    }
+}
