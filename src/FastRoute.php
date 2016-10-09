@@ -4,6 +4,7 @@ namespace Middlewares;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Interop\Container\ContainerInterface;
 use Interop\Http\Middleware\ServerMiddlewareInterface;
 use Interop\Http\Middleware\DelegateInterface;
 use FastRoute\Dispatcher;
