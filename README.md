@@ -55,6 +55,7 @@ $response = $dispatcher->dispatch(new ServerRequest('/hello/world'));
 **fastRoute** allows to define anything as the router handler (a closure, callback, action object, controller class, etc). By default, it's interpreted in the following way:
 
 * If it's a string similar to `Namespace\Class::method`, and the method is not static, create a instance of `Namespace\Class` and call the method.
+* If the string is the name of a existing class (like: `Namespace\Class`) and contains the method `__invoke`, create a instance and execute that method.
 * Otherwise, treat it as a callable.
 
 If you want to change this behaviour, use a container implementing the [container-interop](https://github.com/container-interop/container-interop) to return the route callable.
