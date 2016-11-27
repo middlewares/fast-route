@@ -3,8 +3,8 @@
 namespace Middlewares\Tests;
 
 use Middlewares\FastRoute;
+use Middlewares\Utils\Dispatcher;
 use Zend\Diactoros\ServerRequest;
-use mindplay\middleman\Dispatcher;
 
 class FastRouteTest extends \PHPUnit_Framework_TestCase
 {
