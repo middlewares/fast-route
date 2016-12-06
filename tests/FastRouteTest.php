@@ -22,9 +22,9 @@ class FastRouteTest extends \PHPUnit_Framework_TestCase
 
         $request = Factory::createServerRequest([], 'GET', 'http://domain.com/user/oscarotero/35');
 
-        $response = (new Dispatcher([
+        $response = Dispatcher::run([
             new FastRoute($dispatcher),
-        ]))->dispatch($request);
+        ], $request);
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertEquals('Hello oscarotero (35)', (string) $response->getBody());
@@ -44,9 +44,9 @@ class FastRouteTest extends \PHPUnit_Framework_TestCase
 
         $request = Factory::createServerRequest([], 'GET', 'http://domain.com/username/oscarotero/35');
 
-        $response = (new Dispatcher([
+        $response = Dispatcher::run([
             new FastRoute($dispatcher),
-        ]))->dispatch($request);
+        ], $request);
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertEquals(404, $response->getStatusCode());
@@ -66,9 +66,9 @@ class FastRouteTest extends \PHPUnit_Framework_TestCase
 
         $request = Factory::createServerRequest([], 'GET', 'http://domain.com/user/oscarotero/35');
 
-        $response = (new Dispatcher([
+        $response = Dispatcher::run([
             new FastRoute($dispatcher),
-        ]))->dispatch($request);
+        ], $request);
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertEquals(405, $response->getStatusCode());
