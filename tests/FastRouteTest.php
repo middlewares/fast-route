@@ -4,7 +4,7 @@ namespace Middlewares\Tests;
 
 use Middlewares\FastRoute;
 use Middlewares\Utils\Dispatcher;
-use Zend\Diactoros\ServerRequest;
+use Middlewares\Utils\Factory;
 
 class FastRouteTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,9 +20,11 @@ class FastRouteTest extends \PHPUnit_Framework_TestCase
             });
         });
 
+        $request = Factory::createServerRequest([], 'GET', 'http://domain.com/user/oscarotero/35');
+
         $response = (new Dispatcher([
             new FastRoute($dispatcher),
-        ]))->dispatch(new ServerRequest([], [], 'http://domain.com/user/oscarotero/35'));
+        ]))->dispatch($request);
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertEquals('Hello oscarotero (35)', (string) $response->getBody());
@@ -40,9 +42,11 @@ class FastRouteTest extends \PHPUnit_Framework_TestCase
             });
         });
 
+        $request = Factory::createServerRequest([], 'GET', 'http://domain.com/username/oscarotero/35');
+
         $response = (new Dispatcher([
             new FastRoute($dispatcher),
-        ]))->dispatch(new ServerRequest([], [], 'http://domain.com/username/oscarotero/35'));
+        ]))->dispatch($request);
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertEquals(404, $response->getStatusCode());
@@ -60,9 +64,11 @@ class FastRouteTest extends \PHPUnit_Framework_TestCase
             });
         });
 
+        $request = Factory::createServerRequest([], 'GET', 'http://domain.com/user/oscarotero/35');
+
         $response = (new Dispatcher([
             new FastRoute($dispatcher),
-        ]))->dispatch(new ServerRequest([], [], 'http://domain.com/user/oscarotero/35'));
+        ]))->dispatch($request);
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertEquals(405, $response->getStatusCode());
