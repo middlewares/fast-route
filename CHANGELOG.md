@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 * Updated tests
+* Updated to `http-interop/http-middleware#0.4`
+* Updated `friendsofphp/php-cs-fixer#2.0`
 
 ## 0.2.0 - 2016-11-27
 
