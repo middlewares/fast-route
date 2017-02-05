@@ -2,9 +2,12 @@
 
 namespace Middlewares\Tests;
 
+use Interop\Container\ContainerInterface;
 use Middlewares\FastRoute;
 use Middlewares\Utils\Dispatcher;
 use Middlewares\Utils\Factory;
+use Prophecy\Prophecy\ObjectProphecy;
+use Psr\Http\Message\ServerRequestInterface;
 
 class FastRouteTest extends \PHPUnit_Framework_TestCase
 {
@@ -72,5 +75,34 @@ class FastRouteTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertEquals(405, $response->getStatusCode());
+    }
+
+    public function testFastRouteContainerResolve()
+    {
+        $dispatcher = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
+            $r->addRoute('POST', '/user/{name}/{id:[0-9]+}', 'controller');
+        });
+
+        $request = Factory::createServerRequest([], 'POST', 'http://domain.com/user/oscarotero/35');
+
+        /** @var ContainerInterface|ObjectProphecy $resolver */
+        $resolver = $this->prophesize(ContainerInterface::class);
+        $resolver->get('controller')->willReturn(function ($request) {
+            return sprintf(
+                'Hello %s (%s)',
+                $request->getAttribute('name'),
+                $request->getAttribute('id')
+            );
+        });
+
+        $middleware = new FastRoute($dispatcher);
+        $middleware->resolver($resolver->reveal());
+
+        $response = Dispatcher::run([
+            $middleware,
+        ], $request);
+
+        $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
+        $this->assertEquals('Hello oscarotero (35)', (string) $response->getBody());
     }
 }
