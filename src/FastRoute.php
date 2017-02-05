@@ -2,6 +2,9 @@
 
 namespace Middlewares;
 
+use Middlewares\Utils\CallableResolver\CallableResolverInterface;
+use Middlewares\Utils\CallableResolver\ContainerResolver;
+use Middlewares\Utils\CallableResolver\ReflectionResolver;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Interop\Container\ContainerInterface;
@@ -22,7 +25,7 @@ class FastRoute implements MiddlewareInterface
     private $arguments = [];
 
     /**
-     * @var ContainerInterface Used to resolve the controllers
+     * @var CallableResolverInterface Used to resolve the controllers
      */
     private $resolver;
 
@@ -39,13 +42,13 @@ class FastRoute implements MiddlewareInterface
     /**
      * Set the resolver used to create the controllers.
      *
-     * @param ContainerInterface $resolver
+     * @param ContainerInterface $container
      *
      * @return self
      */
-    public function resolver(ContainerInterface $resolver)
+    public function resolver(ContainerInterface $container)
     {
-        $this->resolver = $resolver;
+        $this->resolver = new ContainerResolver($container);
 
         return $this;
     }
@@ -88,12 +91,17 @@ class FastRoute implements MiddlewareInterface
 
         $arguments = array_merge([$request], $this->arguments);
 
-        if ($this->resolver) {
-            $callable = $this->resolver->get($route[1]);
-        } else {
-            $callable = Utils\CallableHandler::resolve($route[1], $arguments);
-        }
+        $callable = $this->getResolver()->resolve($route[1], $arguments);
 
         return Utils\CallableHandler::execute($callable, $arguments);
+    }
+
+    private function getResolver()
+    {
+        if (!isset($this->resolver)) {
+            $this->resolver = new ReflectionResolver();
+        }
+
+        return $this->resolver;
     }
 }
