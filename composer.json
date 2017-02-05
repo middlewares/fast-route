@@ -21,13 +21,17 @@
         "php": "^5.6 || ^7.0",
         "http-interop/http-middleware": "^0.4",
         "nikic/fast-route": "^1.0",
-        "middlewares/utils": "~0.8"
+        "middlewares/utils": "~0.9"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.5",
         "zendframework/zend-diactoros": "^1.3",
         "friendsofphp/php-cs-fixer": "^2.0",
-        "squizlabs/php_codesniffer": "^2.7"
+        "squizlabs/php_codesniffer": "^2.7",
+        "container-interop/container-interop": "^1.1"
+    },
+    "suggest": {
+        "container-interop/container-interop": "Can be used to automatically resolve route actions"
     },
     "autoload": {
         "psr-4": {
