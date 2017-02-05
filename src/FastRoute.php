@@ -96,6 +96,11 @@ class FastRoute implements MiddlewareInterface
         return Utils\CallableHandler::execute($callable, $arguments);
     }
 
+    /**
+     * Return the resolver used for the controllers
+     *
+     * @return CallableResolverInterface
+     */
     private function getResolver()
     {
         if (!isset($this->resolver)) {
