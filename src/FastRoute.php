@@ -7,7 +7,7 @@ use Middlewares\Utils\CallableResolver\ContainerResolver;
 use Middlewares\Utils\CallableResolver\ReflectionResolver;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Interop\Http\ServerMiddleware\DelegateInterface;
 use FastRoute\Dispatcher;

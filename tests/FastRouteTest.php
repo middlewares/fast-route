@@ -2,7 +2,7 @@
 
 namespace Middlewares\Tests;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Middlewares\FastRoute;
 use Middlewares\Utils\Dispatcher;
 use Middlewares\Utils\Factory;
