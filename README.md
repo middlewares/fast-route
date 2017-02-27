@@ -14,6 +14,7 @@ Middleware to use [FastRoute](https://github.com/nikic/FastRoute).
 * PHP >= 5.6
 * A [PSR-7](https://packagist.org/providers/psr/http-message-implementation) http mesage implementation ([Diactoros](https://github.com/zendframework/zend-diactoros), [Guzzle](https://github.com/guzzle/psr7), [Slim](https://github.com/slimphp/Slim), etc...)
 * A [PSR-15 middleware dispatcher](https://github.com/middlewares/awesome-psr15-middlewares#dispatcher)
+* Optionally, a [PSR-11](https://github.com/php-fig/container) container to resolve the route handlers
 
 ## Installation
 
@@ -56,8 +57,7 @@ $response = $dispatcher->dispatch(new ServerRequest('/hello/world'));
 * If the string is the name of a existing class (like: `Namespace\Class`) and contains the method `__invoke`, create a instance and execute that method.
 * Otherwise, treat it as a callable.
 
-If you want to change this behaviour, use a container implementing the [container-interop](https://github.com/container-interop/container-interop) to return the route callable.
-
+If you want to change this behaviour, use a container implementing the [PSR-11 spec](https://github.com/php-fig/container) to return the route callable.
 
 ## Options
 
@@ -65,9 +65,9 @@ If you want to change this behaviour, use a container implementing the [containe
 
 The dispatcher instance to use.
 
-#### `resolver(Interop\Container\ContainerInterface $resolver)`
+#### `resolver(Psr\Container\ContainerInterface $resolver)`
 
-To use a container implementing [container-interop](https://github.com/container-interop/container-interop) to resolve the route handlers.
+To use a container implementing [PSR-11 interface](https://github.com/php-fig/container) to resolve the route handlers.
 
 #### `arguments(...$args)`
 

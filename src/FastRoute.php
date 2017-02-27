@@ -2,6 +2,8 @@
 
 namespace Middlewares;
 
+use Middlewares\Utils\Factory;
+use Middlewares\Utils\CallableHandler;
 use Middlewares\Utils\CallableResolver\CallableResolverInterface;
 use Middlewares\Utils\CallableResolver\ContainerResolver;
 use Middlewares\Utils\CallableResolver\ReflectionResolver;
@@ -78,11 +80,11 @@ class FastRoute implements MiddlewareInterface
         $route = $this->router->dispatch($request->getMethod(), $request->getUri()->getPath());
 
         if ($route[0] === Dispatcher::NOT_FOUND) {
-            return Utils\Factory::createResponse(404);
+            return Factory::createResponse(404);
         }
 
         if ($route[0] === Dispatcher::METHOD_NOT_ALLOWED) {
-            return Utils\Factory::createResponse(405);
+            return Factory::createResponse(405);
         }
 
         foreach ($route[2] as $name => $value) {
@@ -93,7 +95,7 @@ class FastRoute implements MiddlewareInterface
 
         $callable = $this->getResolver()->resolve($route[1], $arguments);
 
-        return Utils\CallableHandler::execute($callable, $arguments);
+        return CallableHandler::execute($callable, $arguments);
     }
 
     /**
