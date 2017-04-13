@@ -77,7 +77,7 @@ class FastRouteTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(405, $response->getStatusCode());
     }
 
-    public function testFastRouteContainerResolve()
+    public function testFastRouteContainerResolver()
     {
         $dispatcher = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
             $r->addRoute('POST', '/user/{name}/{id:[0-9]+}', 'controller');
@@ -85,9 +85,9 @@ class FastRouteTest extends \PHPUnit_Framework_TestCase
 
         $request = Factory::createServerRequest([], 'POST', 'http://domain.com/user/oscarotero/35');
 
-        /** @var ContainerInterface|ObjectProphecy $resolver */
-        $resolver = $this->prophesize(ContainerInterface::class);
-        $resolver->get('controller')->willReturn(function ($request) {
+        /** @var ContainerInterface|ObjectProphecy $container */
+        $container = $this->prophesize(ContainerInterface::class);
+        $container->get('controller')->willReturn(function ($request) {
             return sprintf(
                 'Hello %s (%s)',
                 $request->getAttribute('name'),
@@ -96,7 +96,7 @@ class FastRouteTest extends \PHPUnit_Framework_TestCase
         });
 
         $middleware = new FastRoute($dispatcher);
-        $middleware->resolver($resolver->reveal());
+        $middleware->container($container->reveal());
 
         $response = Dispatcher::run([
             $middleware,
