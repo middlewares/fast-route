@@ -65,7 +65,11 @@ If you want to change this behaviour, use a container implementing the [PSR-11 s
 
 The dispatcher instance to use.
 
-#### `resolver(Psr\Container\ContainerInterface $resolver)`
+#### `resolver(Middlewares\Utils\CallableResolver\CallableResolverInterface $resolver)`
+
+The resolver implementing [CallableResolverInterface]() to resolve the route handlers.
+
+#### `container(Psr\Container\ContainerInterface $container)`
 
 To use a container implementing [PSR-11 interface](https://github.com/php-fig/container) to resolve the route handlers.
 
