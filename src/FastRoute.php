@@ -64,9 +64,7 @@ class FastRoute implements MiddlewareInterface
      */
     public function container(ContainerInterface $container)
     {
-        $this->resolver = new ContainerResolver($container);
-
-        return $this;
+        return $this->resolver(new ContainerResolver($container));
     }
 
     /**
