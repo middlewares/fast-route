@@ -98,7 +98,7 @@ class FastRoute implements MiddlewareInterface
         }
 
         if ($route[0] === Dispatcher::METHOD_NOT_ALLOWED) {
-            return Factory::createResponse(405);
+            return Factory::createResponse(405)->withHeader('Allow', implode(', ', $route[1]));
         }
 
         foreach ($route[2] as $name => $value) {
