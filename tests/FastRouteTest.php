@@ -67,6 +67,14 @@ class FastRouteTest extends \PHPUnit_Framework_TestCase
                     $request->getAttribute('id')
                 );
             });
+
+            $r->addRoute('PUT', '/user/{name}/{id:[0-9]+}', function ($request) {
+                return sprintf(
+                    'Hello %s (%s)',
+                    $request->getAttribute('name'),
+                    $request->getAttribute('id')
+                );
+            });
         });
 
         $request = Factory::createServerRequest([], 'GET', 'http://domain.com/user/oscarotero/35');
@@ -77,6 +85,7 @@ class FastRouteTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertEquals(405, $response->getStatusCode());
+        $this->assertEquals('POST, PUT', $response->getHeaderLine('Allow'));
     }
 
     public function testFastRouteResolver()
