@@ -31,7 +31,6 @@ class FastRouteTest extends \PHPUnit_Framework_TestCase
             new FastRoute($dispatcher),
         ], $request);
 
-        $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertEquals('Hello oscarotero (35)', (string) $response->getBody());
     }
 
@@ -53,7 +52,6 @@ class FastRouteTest extends \PHPUnit_Framework_TestCase
             new FastRoute($dispatcher),
         ], $request);
 
-        $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertEquals(404, $response->getStatusCode());
     }
 
@@ -83,7 +81,6 @@ class FastRouteTest extends \PHPUnit_Framework_TestCase
             new FastRoute($dispatcher),
         ], $request);
 
-        $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertEquals(405, $response->getStatusCode());
         $this->assertEquals('POST, PUT', $response->getHeaderLine('Allow'));
     }
@@ -113,7 +110,6 @@ class FastRouteTest extends \PHPUnit_Framework_TestCase
             $middleware,
         ], $request);
 
-        $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertEquals('Hello oscarotero (35)', (string) $response->getBody());
     }
 
@@ -142,7 +138,6 @@ class FastRouteTest extends \PHPUnit_Framework_TestCase
             $middleware,
         ], $request);
 
-        $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertEquals('Hello oscarotero (35)', (string) $response->getBody());
     }
 }
