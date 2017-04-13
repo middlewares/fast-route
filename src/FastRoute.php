@@ -42,13 +42,13 @@ class FastRoute implements MiddlewareInterface
     }
 
     /**
-     * Set the resolver used to create the controllers.
+     * Set the container used to create the controllers.
      *
      * @param ContainerInterface $container
      *
      * @return self
      */
-    public function resolver(ContainerInterface $container)
+    public function container(ContainerInterface $container)
     {
         $this->resolver = new ContainerResolver($container);
 
