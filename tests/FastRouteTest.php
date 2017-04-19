@@ -2,13 +2,15 @@
 
 namespace Middlewares\Tests;
 
-use Psr\Container\ContainerInterface;
-use Middlewares\FastRoute;
+use Middlewares\FastRouteDiscovery;
+use Middlewares\FastRouteAction;
 use Middlewares\Utils\CallableResolver\CallableResolverInterface;
+use Middlewares\Utils\CallableResolver\ContainerResolver;
 use Middlewares\Utils\Dispatcher;
 use Middlewares\Utils\Factory;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class FastRouteTest extends \PHPUnit_Framework_TestCase
@@ -28,7 +30,8 @@ class FastRouteTest extends \PHPUnit_Framework_TestCase
         $request = Factory::createServerRequest([], 'GET', 'http://domain.com/user/oscarotero/35');
 
         $response = Dispatcher::run([
-            new FastRoute($dispatcher),
+            new FastRouteDiscovery($dispatcher),
+            new FastRouteAction(),
         ], $request);
 
         $this->assertEquals('Hello oscarotero (35)', (string) $response->getBody());
@@ -49,7 +52,8 @@ class FastRouteTest extends \PHPUnit_Framework_TestCase
         $request = Factory::createServerRequest([], 'GET', 'http://domain.com/username/oscarotero/35');
 
         $response = Dispatcher::run([
-            new FastRoute($dispatcher),
+            new FastRouteDiscovery($dispatcher),
+            new FastRouteAction(),
         ], $request);
 
         $this->assertEquals(404, $response->getStatusCode());
@@ -78,7 +82,8 @@ class FastRouteTest extends \PHPUnit_Framework_TestCase
         $request = Factory::createServerRequest([], 'GET', 'http://domain.com/user/oscarotero/35');
 
         $response = Dispatcher::run([
-            new FastRoute($dispatcher),
+            new FastRouteDiscovery($dispatcher),
+            new FastRouteAction(),
         ], $request);
 
         $this->assertEquals(405, $response->getStatusCode());
@@ -103,11 +108,9 @@ class FastRouteTest extends \PHPUnit_Framework_TestCase
             );
         });
 
-        $middleware = new FastRoute($dispatcher);
-        $middleware->resolver($resolver->reveal());
-
         $response = Dispatcher::run([
-            $middleware,
+            new FastRouteDiscovery($dispatcher),
+            new FastRouteAction($resolver->reveal()),
         ], $request);
 
         $this->assertEquals('Hello oscarotero (35)', (string) $response->getBody());
@@ -131,11 +134,11 @@ class FastRouteTest extends \PHPUnit_Framework_TestCase
             );
         });
 
-        $middleware = new FastRoute($dispatcher);
-        $middleware->container($container->reveal());
+        $resolver = new ContainerResolver($container->reveal());
 
         $response = Dispatcher::run([
-            $middleware,
+            new FastRouteDiscovery($dispatcher),
+            new FastRouteAction($resolver),
         ], $request);
 
         $this->assertEquals('Hello oscarotero (35)', (string) $response->getBody());
