@@ -3,13 +3,8 @@
 namespace Middlewares;
 
 use Middlewares\Utils\Factory;
-use Middlewares\Utils\CallableHandler;
-use Middlewares\Utils\CallableResolver\CallableResolverInterface;
-use Middlewares\Utils\CallableResolver\ContainerResolver;
-use Middlewares\Utils\CallableResolver\ReflectionResolver;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Container\ContainerInterface;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Interop\Http\ServerMiddleware\DelegateInterface;
 use FastRoute\Dispatcher;
@@ -22,14 +17,9 @@ class FastRoute implements MiddlewareInterface
     private $router;
 
     /**
-     * @var array Extra arguments passed to the controller
+     * @var string Attribute name for handler reference
      */
-    private $arguments = [];
-
-    /**
-     * @var CallableResolverInterface Used to resolve the controllers
-     */
-    private $resolver;
+    private $attribute = 'request-handler';
 
     /**
      * Set the Dispatcher instance.
@@ -42,39 +32,15 @@ class FastRoute implements MiddlewareInterface
     }
 
     /**
-     * Set the resolver used to create the controllers.
+     * Set the attribute name to store handler reference.
      *
-     * @param CallableResolverInterface $resolver
-     *
-     * @return self
-     */
-    public function resolver(CallableResolverInterface $resolver)
-    {
-        $this->resolver = $resolver;
-
-        return $this;
-    }
-
-    /**
-     * Set the container used to create the controllers.
-     *
-     * @param ContainerInterface $container
+     * @param string $attribute
      *
      * @return self
      */
-    public function container(ContainerInterface $container)
+    public function attribute($attribute)
     {
-        return $this->resolver(new ContainerResolver($container));
-    }
-
-    /**
-     * Extra arguments passed to the callable.
-     *
-     * @return self
-     */
-    public function arguments()
-    {
-        $this->arguments = func_get_args();
+        $this->attribute = $attribute;
 
         return $this;
     }
@@ -103,24 +69,21 @@ class FastRoute implements MiddlewareInterface
             $request = $request->withAttribute($name, $value);
         }
 
-        $arguments = array_merge([$request], $this->arguments);
+        $request = $this->setHandler($request, $route[1]);
 
-        $callable = $this->getResolver()->resolve($route[1], $arguments);
-
-        return CallableHandler::execute($callable, $arguments);
+        return $delegate->process($request);
     }
 
     /**
-     * Return the resolver used for the controllers
+     * Set the handler reference on the request.
      *
-     * @return CallableResolverInterface
+     * @param ServerRequestInterface $request
+     * @param callable|string|array  $handler
+     *
+     * @return ServerRequestInterface
      */
-    private function getResolver()
+    protected function setHandler(ServerRequestInterface $request, $handler)
     {
-        if (!isset($this->resolver)) {
-            $this->resolver = new ReflectionResolver();
-        }
-
-        return $this->resolver;
+        return $request->withAttribute($this->attribute, $handler);
     }
 }
