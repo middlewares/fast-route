@@ -45,35 +45,52 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
 });
 
 $dispatcher = new Dispatcher([
-    new Middlewares\FastRoute($dispatcher)
+    new Middlewares\FastRouteDiscovery($dispatcher),
+    // ...
+    new Middlewares\FastRouteAction(),
 ]);
 
 $response = $dispatcher->dispatch(new ServerRequest('/hello/world'));
 ```
 
-**fastRoute** allows to define anything as the router handler (a closure, callback, action object, controller class, etc). By default, it's interpreted in the following way:
+**FastRoute** allows anything to be defined as the router handler (a closure, callback, action object, controller class, etc). `FastRouteDiscovery` will store this handler in a request attribute called `controller`.
+
+When the `FastRouteAction` middleware processes the request, it will read the `controller` request attribute and convert the handler into a callable. By default, it will be interpreted as follows:
 
 * If it's a string similar to `Namespace\Class::method`, and the method is not static, create a instance of `Namespace\Class` and call the method.
 * If the string is the name of a existing class (like: `Namespace\Class`) and contains the method `__invoke`, create a instance and execute that method.
 * Otherwise, treat it as a callable.
 
-If you want to change this behaviour, use a container implementing the [PSR-11 spec](https://github.com/php-fig/container) to return the route callable.
+There are two options to change the default behavior:
 
-## Options
+- Inject a `Middlewares\Utils\CallableResolver\ContainerResolver` that wraps a [PSR-11 container](https://github.com/php-fig/container).
+- Inject a `Middlewares\Utils\CallableResolver\CallableResolverInterface` instance that returns a callable.
 
-#### `__construct(FastRoute\Dispatcher $dispatcher)`
+```php
+use Middlewares\Utils\CallableResolver\ContainerResolver;
+
+// Use a PSR-11 container to load the controller
+$resolver = new ContainerResolver($container);
+
+$dispatcher = new Dispatcher([
+    // ...
+    new Middlewares\FastRouteAction($resolver),
+]);
+```
+
+## Options for Discovery
+
+### `__construct(FastRoute\Dispatcher $dispatcher)`
 
 The dispatcher instance to use.
 
-#### `resolver(Middlewares\Utils\CallableResolver\CallableResolverInterface $resolver)`
+## Options for Action
 
-The resolver implementing [CallableResolverInterface]() to resolve the route handlers.
+### `__construct(Middlewares\Utils\CallableResolver\CallableResolverInterface $resolver)`
 
-#### `container(Psr\Container\ContainerInterface $container)`
+The resolver instance to use. If none is provided a generic `ReflectionResolver` will be used.
 
-To use a container implementing [PSR-11 interface](https://github.com/php-fig/container) to resolve the route handlers.
-
-#### `arguments(...$args)`
+### `arguments(...$args)`
 
 Extra arguments to pass to the controller. This is useful to inject, for example a service container:
 
@@ -82,13 +99,13 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->addRoute('GET', '/posts/{id}', function ($request, $app) {
         $id = $request->getAttribute('id');
         $post = $app->get('database')->select($id);
-        
+
         return $app->get('templates')->render($post);
     });
 });
 
 $dispatcher = new Dispatcher([
-    (new Middlewares\FastRoute($dispatcher))
+    (new Middlewares\FastRouteAction())
         ->arguments($app)
 ]);
 ```
