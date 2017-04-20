@@ -27,6 +27,8 @@ You may also want to install [middlewares/request-handler](https://packagist.org
 
 ## Example
 
+This example uses [middleware/request-handler](https://github.com/middlewares/request-handler) to execute the route handler:
+
 ```php
 //Create the router dispatcher
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
@@ -47,7 +49,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
 
 $dispatcher = new Dispatcher([
     new Middlewares\FastRoute($dispatcher),
-    // ...
+    new Middlewares\RequestHandler()
 ]);
 
 $response = $dispatcher->dispatch(new ServerRequest('/hello/world'));
