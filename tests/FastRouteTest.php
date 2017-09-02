@@ -2,6 +2,7 @@
 
 namespace Middlewares\Tests;
 
+use PHPUnit\Framework\TestCase;
 use FastRoute\RouteCollector;
 use Middlewares\FastRoute;
 use Middlewares\Utils\Dispatcher;
@@ -9,7 +10,7 @@ use Middlewares\Utils\Factory;
 
 use function FastRoute\simpleDispatcher;
 
-class FastRouteTest extends \PHPUnit_Framework_TestCase
+class FastRouteTest extends TestCase
 {
     public function testFastRouteNotFound()
     {
