@@ -4,6 +4,7 @@
 
     <!-- display progress -->
     <arg value="p"/>
+    <arg name="report" value="full"/>
     <arg name="colors"/>
 
     <!-- coding standard -->
