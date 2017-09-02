@@ -2,12 +2,10 @@
 
 namespace Middlewares\Tests;
 
-use PHPUnit\Framework\TestCase;
-use FastRoute\RouteCollector;
 use Middlewares\FastRoute;
 use Middlewares\Utils\Dispatcher;
 use Middlewares\Utils\Factory;
-
+use PHPUnit\Framework\TestCase;
 use function FastRoute\simpleDispatcher;
 
 class FastRouteTest extends TestCase
@@ -56,7 +54,7 @@ class FastRouteTest extends TestCase
             new FastRoute($dispatcher),
             function ($request) {
                 echo $request->getAttribute('request-handler');
-            }
+            },
         ], $request);
 
         $this->assertEquals('listUsers', (string) $response->getBody());
@@ -74,7 +72,7 @@ class FastRouteTest extends TestCase
             (new FastRoute($dispatcher))->attribute('handler'),
             function ($request) {
                 echo $request->getAttribute('handler');
-            }
+            },
         ], $request);
 
         $this->assertEquals('listUsers', (string) $response->getBody());
