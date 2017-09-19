@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Append `.dist` suffix to phpcs.xml and phpunit.xml files
 * Changed the configuration of phpcs and php_cs
 * Upgraded phpunit to the latest version and improved its config file
+* Updated to `http-interop/http-middleware#0.5`
 
 ## [0.7.0] - 2017-04-20
 
