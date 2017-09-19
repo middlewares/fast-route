@@ -3,8 +3,8 @@
 namespace Middlewares;
 
 use FastRoute\Dispatcher;
-use Interop\Http\ServerMiddleware\DelegateInterface;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
+use Interop\Http\Server\MiddlewareInterface;
+use Interop\Http\Server\RequestHandlerInterface;
 use Middlewares\Utils\Factory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -48,12 +48,12 @@ class FastRoute implements MiddlewareInterface
     /**
      * Process a server request and return a response.
      *
-     * @param ServerRequestInterface $request
-     * @param DelegateInterface      $delegate
+     * @param ServerRequestInterface  $request
+     * @param RequestHandlerInterface $handler
      *
      * @return ResponseInterface
      */
-    public function process(ServerRequestInterface $request, DelegateInterface $delegate)
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler)
     {
         $route = $this->router->dispatch($request->getMethod(), $request->getUri()->getPath());
 
@@ -71,7 +71,7 @@ class FastRoute implements MiddlewareInterface
 
         $request = $this->setHandler($request, $route[1]);
 
-        return $delegate->process($request);
+        return $handler->handle($request);
     }
 
     /**
