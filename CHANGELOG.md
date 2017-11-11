@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## UNRELEASED
+
+### Removed
+
+* Removed support for PHP 5.x.
+
+### Changed
+
+* Replaced `http-interop/http-middleware` with  `http-interop/http-server-middleware`.
+
 ## [0.8.0] - 2017-09-21
 
 ### Changed
