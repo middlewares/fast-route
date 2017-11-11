@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Middlewares;
 
@@ -23,8 +24,6 @@ class FastRoute implements MiddlewareInterface
 
     /**
      * Set the Dispatcher instance.
-     *
-     * @param Dispatcher $router
      */
     public function __construct(Dispatcher $router)
     {
@@ -33,12 +32,8 @@ class FastRoute implements MiddlewareInterface
 
     /**
      * Set the attribute name to store handler reference.
-     *
-     * @param string $attribute
-     *
-     * @return self
      */
-    public function attribute($attribute)
+    public function attribute(string $attribute): self
     {
         $this->attribute = $attribute;
 
@@ -47,13 +42,8 @@ class FastRoute implements MiddlewareInterface
 
     /**
      * Process a server request and return a response.
-     *
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler)
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $route = $this->router->dispatch($request->getMethod(), $request->getUri()->getPath());
 
@@ -82,7 +72,7 @@ class FastRoute implements MiddlewareInterface
      *
      * @return ServerRequestInterface
      */
-    protected function setHandler(ServerRequestInterface $request, $handler)
+    protected function setHandler(ServerRequestInterface $request, $handler): ServerRequestInterface
     {
         return $request->withAttribute($this->attribute, $handler);
     }
