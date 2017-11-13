@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## UNRELEASED
+## [0.9.0] - 2017-11-13
 
 ### Removed
 
@@ -76,6 +76,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 First version
 
+[0.9.0]: https://github.com/middlewares/fast-route/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/middlewares/fast-route/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/middlewares/fast-route/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/middlewares/fast-route/compare/v0.5.0...v0.6.0
