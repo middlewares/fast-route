@@ -45,3 +45,11 @@ Good pull requests – patches, improvements, new features – are a fantastic h
 ```sh
 composer test
 ```
+
+To get code coverage information execute the following comand:
+
+```sh
+composer coverage
+```
+
+Then, open the `./coverage/index.html` file in your browser.

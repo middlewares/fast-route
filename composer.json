@@ -48,6 +48,7 @@
             "phpunit",
             "phpcs"
         ],
-        "cs-fix": "php-cs-fixer fix ."
+        "cs-fix": "php-cs-fixer fix .",
+        "coverage": "phpunit --coverage-html=coverage"
     }
 }
