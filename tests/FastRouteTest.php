@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Middlewares\Tests;
 
@@ -45,19 +46,20 @@ class FastRouteTest extends TestCase
     public function testFastRouteOK()
     {
         $dispatcher = simpleDispatcher(function (\FastRoute\RouteCollector $r) {
-            $r->get('/users', 'listUsers');
+            $r->get('/users/{name}', 'listUsers');
         });
 
-        $request = Factory::createServerRequest([], 'GET', '/users');
+        $request = Factory::createServerRequest([], 'GET', '/users/alice');
 
         $response = Dispatcher::run([
             new FastRoute($dispatcher),
             function ($request) {
                 echo $request->getAttribute('request-handler');
+                echo $request->getAttribute('name');
             },
         ], $request);
 
-        $this->assertEquals('listUsers', (string) $response->getBody());
+        $this->assertEquals('listUsersalice', (string) $response->getBody());
     }
 
     public function testFastRouteCustomAttribute()
