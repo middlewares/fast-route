@@ -20,8 +20,8 @@
     "require": {
         "php": "^7.0",
         "nikic/fast-route": "^1.0",
-        "middlewares/utils": "~0.13",
-        "http-interop/http-server-middleware": "^1.0"
+        "middlewares/utils": "^1.0",
+        "psr/http-server-middleware": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.0",
