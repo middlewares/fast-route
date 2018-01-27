@@ -27,11 +27,7 @@
         "phpunit/phpunit": "^6.0",
         "zendframework/zend-diactoros": "^1.3",
         "friendsofphp/php-cs-fixer": "^2.0",
-        "squizlabs/php_codesniffer": "^3.0",
-        "psr/container": "^1.0"
-    },
-    "suggest": {
-        "container-interop/container-interop": "Can be used to automatically resolve route actions"
+        "squizlabs/php_codesniffer": "^3.0"
     },
     "autoload": {
         "psr-4": {
