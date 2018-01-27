@@ -67,10 +67,7 @@ class FastRoute implements MiddlewareInterface
     /**
      * Set the handler reference on the request.
      *
-     * @param ServerRequestInterface $request
-     * @param callable|string|array  $handler
-     *
-     * @return ServerRequestInterface
+     * @param mixed $handler
      */
     protected function setHandler(ServerRequestInterface $request, $handler): ServerRequestInterface
     {
