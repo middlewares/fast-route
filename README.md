@@ -36,7 +36,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         //The route parameters are stored as attributes
         $name = $request->getAttribute('name');
 
-        //You can echo the output (it will be captured and writted into the body)
+        //You can echo the output (it will be captured and written into the body)
         echo sprintf('Hello %s', $name);
 
         //Or return a string
