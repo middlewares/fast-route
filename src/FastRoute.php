@@ -5,6 +5,7 @@ namespace Middlewares;
 
 use FastRoute\Dispatcher;
 use Middlewares\Utils\Factory;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -21,6 +22,11 @@ class FastRoute implements MiddlewareInterface
      * @var string Attribute name for handler reference
      */
     private $attribute = 'request-handler';
+
+    /**
+     * @var ResponseFactoryInterface
+     */
+    private $responseFactory;
 
     /**
      * Set the Dispatcher instance.
@@ -41,6 +47,16 @@ class FastRoute implements MiddlewareInterface
     }
 
     /**
+     * Set the response factory to return the error responses.
+     */
+    public function responseFactory(ResponseFactoryInterface $responseFactory): self
+    {
+        $this->responseFactory = $responseFactory;
+
+        return $this;
+    }
+
+    /**
      * Process a server request and return a response.
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
@@ -48,11 +64,13 @@ class FastRoute implements MiddlewareInterface
         $route = $this->router->dispatch($request->getMethod(), $request->getUri()->getPath());
 
         if ($route[0] === Dispatcher::NOT_FOUND) {
-            return Factory::createResponse(404);
+            $responseFactory = $this->responseFactory ?: Factory::getResponseFactory();
+            return $responseFactory->createResponse(404);
         }
 
         if ($route[0] === Dispatcher::METHOD_NOT_ALLOWED) {
-            return Factory::createResponse(405)->withHeader('Allow', implode(', ', $route[1]));
+            $responseFactory = $this->responseFactory ?: Factory::getResponseFactory();
+            return $responseFactory->createResponse(405)->withHeader('Allow', implode(', ', $route[1]));
         }
 
         foreach ($route[2] as $name => $value) {

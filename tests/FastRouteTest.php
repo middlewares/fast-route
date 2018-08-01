@@ -17,7 +17,7 @@ class FastRouteTest extends TestCase
             $r->get('/users', 'listUsers');
         });
 
-        $request = Factory::createServerRequest([], 'GET', '/posts');
+        $request = Factory::createServerRequest('GET', '/posts');
 
         $response = Dispatcher::run([
             new FastRoute($dispatcher),
@@ -33,7 +33,7 @@ class FastRouteTest extends TestCase
             $r->post('/users', 'createUser');
         });
 
-        $request = Factory::createServerRequest([], 'DELETE', '/users');
+        $request = Factory::createServerRequest('DELETE', '/users');
 
         $response = Dispatcher::run([
             new FastRoute($dispatcher),
@@ -49,7 +49,7 @@ class FastRouteTest extends TestCase
             $r->get('/users/{name}', 'listUsers');
         });
 
-        $request = Factory::createServerRequest([], 'GET', '/users/alice');
+        $request = Factory::createServerRequest('GET', '/users/alice');
 
         $response = Dispatcher::run([
             new FastRoute($dispatcher),
@@ -68,7 +68,7 @@ class FastRouteTest extends TestCase
             $r->get('/users', 'listUsers');
         });
 
-        $request = Factory::createServerRequest([], 'GET', '/users');
+        $request = Factory::createServerRequest('GET', '/users');
 
         $response = Dispatcher::run([
             (new FastRoute($dispatcher))->attribute('handler'),
