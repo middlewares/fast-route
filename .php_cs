@@ -104,7 +104,6 @@ return PhpCsFixer\Config::create()
         'pre_increment' => true,
         'protected_to_private' => true,
         'return_type_declaration' => true,
-        'self_accessor' => true,
         'semicolon_after_instruction' => true,
         'short_scalar_cast' => true,
         'single_blank_line_at_eof' => true,

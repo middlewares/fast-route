@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.0] - unreleased
+
+### Added
+
+- New option `responseFactory` to configure a custom factory implementing `Psr\Http\Message\ResponseFactoryInterface`
+
+### Changed
+
+- Upgraded to the final version of PSR-17 `psr/http-factory`
+
 ## [1.0.0] - 2018-01-27
 
 ### Added
