@@ -29,11 +29,12 @@ class FastRoute implements MiddlewareInterface
     private $responseFactory;
 
     /**
-     * Set the Dispatcher instance.
+     * Set the Dispatcher instance and optionally the response factory to return the error responses.
      */
-    public function __construct(Dispatcher $router)
+    public function __construct(Dispatcher $router, ResponseFactoryInterface $responseFactory = null)
     {
         $this->router = $router;
+        $this->responseFactory = $responseFactory ?? Factory::getResponseFactory();
     }
 
     /**
@@ -64,13 +65,11 @@ class FastRoute implements MiddlewareInterface
         $route = $this->router->dispatch($request->getMethod(), $request->getUri()->getPath());
 
         if ($route[0] === Dispatcher::NOT_FOUND) {
-            $responseFactory = $this->responseFactory ?: Factory::getResponseFactory();
-            return $responseFactory->createResponse(404);
+            return $this->responseFactory->createResponse(404);
         }
 
         if ($route[0] === Dispatcher::METHOD_NOT_ALLOWED) {
-            $responseFactory = $this->responseFactory ?: Factory::getResponseFactory();
-            return $responseFactory->createResponse(405)->withHeader('Allow', implode(', ', $route[1]));
+            return $this->responseFactory->createResponse(405)->withHeader('Allow', implode(', ', $route[1]));
         }
 
         foreach ($route[2] as $name => $value) {
