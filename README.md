@@ -69,7 +69,7 @@ The attribute name used to store the handler in the server request. The default 
 
 #### `responseFactory(Psr\Http\Message\ResponseFactoryInterface $responseFactory)`
 
-A PSR-17 factory to create the responses returned on error (`404` or `405`).
+A PSR-17 factory to create the error responses (`404` or `405`).
 
 ---
 
