@@ -5,6 +5,8 @@ namespace Middlewares;
 
 use FastRoute\Dispatcher;
 use Middlewares\Utils\Traits\HasResponseFactory;
+use Middlewares\Utils\Factory;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -27,9 +29,10 @@ class FastRoute implements MiddlewareInterface
     /**
      * Set the Dispatcher instance.
      */
-    public function __construct(Dispatcher $router)
+    public function __construct(Dispatcher $router, ResponseFactoryInterface $responseFactory = null)
     {
         $this->router = $router;
+        $this->responseFactory = $responseFactory ?: Factory::getResponseFactory();
     }
 
     /**
