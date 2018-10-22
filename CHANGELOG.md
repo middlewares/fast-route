@@ -5,15 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
-
-### Fixed
-
-- Use `phpstan` as a dev dependency to detect bugs
+## [1.2.0] - 2018-10-22
 
 ### Added
 
 - Added `responseFactory` option to `__construct`
+
+### Deprecated
+
+- `responseFactory()` option as a method. Use the contructor argument instead.
+
+### Fixed
+
+- Use `phpstan` as a dev dependency to detect bugs
 
 ## [1.1.0] - 2018-08-04
 

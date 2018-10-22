@@ -4,8 +4,8 @@ declare(strict_types = 1);
 namespace Middlewares;
 
 use FastRoute\Dispatcher;
-use Middlewares\Utils\Traits\HasResponseFactory;
 use Middlewares\Utils\Factory;
+use Middlewares\Utils\Traits\HasResponseFactory;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -27,7 +27,7 @@ class FastRoute implements MiddlewareInterface
     private $attribute = 'request-handler';
 
     /**
-     * Set the Dispatcher instance.
+     * Set the Dispatcher instance and optionally the response factory to return the error responses.
      */
     public function __construct(Dispatcher $router, ResponseFactoryInterface $responseFactory = null)
     {

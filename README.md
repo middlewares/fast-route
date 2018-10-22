@@ -57,20 +57,35 @@ $response = $dispatcher->dispatch(new ServerRequest('/hello/world'));
 
 **FastRoute** allows anything to be defined as the router handler (a closure, callback, action object, controller class, etc). The middleware will store this handler in a request attribute.
 
-## Options
+## API
 
-### `__construct(FastRoute\Dispatcher $dispatcher)`
+### `__construct`
 
-The dispatcher instance to use.
+Type | Required | Description
+--------------|----------|------------
+`FastRoute\Dispatcher` | Yes | The dispatcher instance to use.
+`Psr\Http\Message\ResponseFactoryInterface` | No | A PSR-17 factory to create the error responses (`404` or `405`). If it's not defined, use [Middleware\Utils\Factory](https://github.com/middlewares/utils#factory) to detect it automatically.
 
-### `attribute(string $attribute)`
 
-The attribute name used to store the handler in the server request. The default attribute name is `request-handler`.
+### `attribute`
 
-#### `responseFactory(Psr\Http\Message\ResponseFactoryInterface $responseFactory)`
+Changes the attribute name used to store the handler in the server request. The default name is `request-handler`.
 
-A PSR-17 factory to create the error responses (`404` or `405`).
+Type | Required | Description
+--------------|----------|------------
+`string` | Yes | The new attribute name
 
+```php
+$dispatcher = new Dispatcher([
+    //Save the route handler in an attribute called "route"
+    (new Middlewares\FastRoute($dispatcher))->attribute('route'),
+
+    //Execute the route handler
+    (new Middlewares\RequestHandler())->attribute('route')
+]);
+
+$response = $dispatcher->dispatch(new ServerRequest('/hello/world'));
+```
 ---
 
 Please see [CHANGELOG](CHANGELOG.md) for more information about recent changes and [CONTRIBUTING](CONTRIBUTING.md) for contributing details.
