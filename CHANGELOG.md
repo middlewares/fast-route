@@ -111,7 +111,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 First version
 
-[Unreleased]: https://github.com/middlewares/fast-route/compare/v1.1.0...HEAD
+[1.2.0]: https://github.com/middlewares/fast-route/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/middlewares/fast-route/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/middlewares/fast-route/compare/v0.9.0...v1.0.0
 [0.9.0]: https://github.com/middlewares/fast-route/compare/v0.8.0...v0.9.0
