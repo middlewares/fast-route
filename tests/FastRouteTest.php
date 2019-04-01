@@ -62,6 +62,24 @@ class FastRouteTest extends TestCase
         $this->assertEquals('listUsersalice', (string) $response->getBody());
     }
 
+    public function testAccent()
+    {
+        $dispatcher = simpleDispatcher(function (\FastRoute\RouteCollector $r) {
+            $r->get('/hello/accentué', 'OK');
+        });
+
+        $request = Factory::createServerRequest('GET', '/hello/accentu%C3%A9');
+
+        $response = Dispatcher::run([
+            new FastRoute($dispatcher),
+            function ($request) {
+                echo $request->getAttribute('request-handler');
+            },
+        ], $request);
+
+        $this->assertEquals('OK', (string) $response->getBody());
+    }
+
     public function testFastRouteCustomAttribute()
     {
         $dispatcher = simpleDispatcher(function (\FastRoute\RouteCollector $r) {
