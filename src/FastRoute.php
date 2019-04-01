@@ -50,7 +50,7 @@ class FastRoute implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $route = $this->router->dispatch($request->getMethod(), $request->getUri()->getPath());
+        $route = $this->router->dispatch($request->getMethod(), rawurldecode($request->getUri()->getPath()));
 
         if ($route[0] === Dispatcher::NOT_FOUND) {
             return $this->createResponse(404);
