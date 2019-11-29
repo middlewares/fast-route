@@ -5,13 +5,12 @@
 [![Build Status][ico-travis]][link-travis]
 [![Quality Score][ico-scrutinizer]][link-scrutinizer]
 [![Total Downloads][ico-downloads]][link-downloads]
-[![SensioLabs Insight][ico-sensiolabs]][link-sensiolabs]
 
 Middleware to use [FastRoute](https://github.com/nikic/FastRoute) for handler discovery.
 
 ## Requirements
 
-* PHP >= 7.0
+* PHP >= 7.2
 * A [PSR-7 http library](https://github.com/middlewares/awesome-psr15-middlewares#psr-7-implementations)
 * A [PSR-15 middleware dispatcher](https://github.com/middlewares/awesome-psr15-middlewares#dispatcher)
 
@@ -57,23 +56,25 @@ $response = $dispatcher->dispatch(new ServerRequest('/hello/world'));
 
 **FastRoute** allows anything to be defined as the router handler (a closure, callback, action object, controller class, etc). The middleware will store this handler in a request attribute.
 
-## API
+## Usage
 
-### `__construct`
+Create the middleware with a `FastRoute\Dispatcher` instance:
 
-Type | Required | Description
---------------|----------|------------
-`FastRoute\Dispatcher` | Yes | The dispatcher instance to use.
-`Psr\Http\Message\ResponseFactoryInterface` | No | A PSR-17 factory to create the error responses (`404` or `405`). If it's not defined, use [Middleware\Utils\Factory](https://github.com/middlewares/utils#factory) to detect it automatically.
+```php
+$route = new Middlewares\FastRoute($dispatcher);
+```
 
+Optionally, you can provide a `Psr\Http\Message\ResponseFactoryInterface` as the second argument, that will be used to create the error responses (`404` or `405`). If it's not defined, [Middleware\Utils\Factory](https://github.com/middlewares/utils#factory) will be used to detect it automatically.
 
-### `attribute`
+```php
+$responseFactory = new MyOwnResponseFactory();
+
+$route = new Middlewares\FastRoute($dispatcher, $responseFactory);
+```
+
+### attribute
 
 Changes the attribute name used to store the handler in the server request. The default name is `request-handler`.
-
-Type | Required | Description
---------------|----------|------------
-`string` | Yes | The new attribute name
 
 ```php
 $dispatcher = new Dispatcher([
@@ -83,8 +84,6 @@ $dispatcher = new Dispatcher([
     //Execute the route handler
     (new Middlewares\RequestHandler())->attribute('route')
 ]);
-
-$response = $dispatcher->dispatch(new ServerRequest('/hello/world'));
 ```
 ---
 
@@ -97,10 +96,8 @@ The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
 [ico-travis]: https://img.shields.io/travis/middlewares/fast-route/master.svg?style=flat-square
 [ico-scrutinizer]: https://img.shields.io/scrutinizer/g/middlewares/fast-route.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/middlewares/fast-route.svg?style=flat-square
-[ico-sensiolabs]: https://img.shields.io/sensiolabs/i/bb44398f-43ee-4a09-a60e-d5c9735fa0be.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/middlewares/fast-route
 [link-travis]: https://travis-ci.org/middlewares/fast-route
 [link-scrutinizer]: https://scrutinizer-ci.com/g/middlewares/fast-route
 [link-downloads]: https://packagist.org/packages/middlewares/fast-route
-[link-sensiolabs]: https://insight.sensiolabs.com/projects/bb44398f-43ee-4a09-a60e-d5c9735fa0be

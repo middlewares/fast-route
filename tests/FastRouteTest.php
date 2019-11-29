@@ -3,11 +3,11 @@ declare(strict_types = 1);
 
 namespace Middlewares\Tests;
 
+use function FastRoute\simpleDispatcher;
 use Middlewares\FastRoute;
 use Middlewares\Utils\Dispatcher;
 use Middlewares\Utils\Factory;
 use PHPUnit\Framework\TestCase;
-use function FastRoute\simpleDispatcher;
 
 class FastRouteTest extends TestCase
 {
