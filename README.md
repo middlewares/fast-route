@@ -85,6 +85,7 @@ $dispatcher = new Dispatcher([
     (new Middlewares\RequestHandler())->attribute('route')
 ]);
 ```
+
 ---
 
 Please see [CHANGELOG](CHANGELOG.md) for more information about recent changes and [CONTRIBUTING](CONTRIBUTING.md) for contributing details.
