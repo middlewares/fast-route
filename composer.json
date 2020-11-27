@@ -18,16 +18,16 @@
         "issues": "https://github.com/middlewares/fast-route/issues"
     },
     "require": {
-        "php": "^7.2 || ^8.0",
+        "php": "^7.3 || ^8.0",
         "nikic/fast-route": "^1.0",
         "middlewares/utils": "^3.0",
         "psr/http-server-middleware": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.1",
-        "zendframework/zend-diactoros": "^2.2",
-        "friendsofphp/php-cs-fixer": "^2.0",
-        "squizlabs/php_codesniffer": "^3.0",
+        "phpunit/phpunit": "^9.3",
+        "laminas/laminas-diactoros": "^2.5",
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "squizlabs/php_codesniffer": "^3.5",
         "oscarotero/php-cs-fixer-config": "^1.0"
     },
     "autoload": {
@@ -41,11 +41,10 @@
         }
     },
     "scripts": {
-        "test": [
-            "phpunit --coverage-text",
-            "phpcs"
-        ],
+        "cs": "phpcs",
         "cs-fix": "php-cs-fixer fix",
-        "coverage": "phpunit --coverage-html=coverage"
+        "test": "phpunit",
+        "coverage": "phpunit --coverage-text",
+        "coverage-html": "phpunit --coverage-html=coverage"
     }
 }
