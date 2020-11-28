@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 class FastRouteTest extends TestCase
 {
-    public function testFastRouteNotFound()
+    public function testFastRouteNotFound(): void
     {
         $dispatcher = simpleDispatcher(function (\FastRoute\RouteCollector $r) {
             $r->get('/users', 'listUsers');
@@ -23,10 +23,10 @@ class FastRouteTest extends TestCase
             new FastRoute($dispatcher),
         ], $request);
 
-        $this->assertEquals(404, $response->getStatusCode());
+        self::assertEquals(404, $response->getStatusCode());
     }
 
-    public function testFastRouteNotAllowed()
+    public function testFastRouteNotAllowed(): void
     {
         $dispatcher = simpleDispatcher(function (\FastRoute\RouteCollector $r) {
             $r->get('/users', 'listUsers');
@@ -39,11 +39,11 @@ class FastRouteTest extends TestCase
             new FastRoute($dispatcher),
         ], $request);
 
-        $this->assertEquals(405, $response->getStatusCode());
-        $this->assertEquals('GET, POST', $response->getHeaderLine('Allow'));
+        self::assertEquals(405, $response->getStatusCode());
+        self::assertEquals('GET, POST', $response->getHeaderLine('Allow'));
     }
 
-    public function testFastRouteOK()
+    public function testFastRouteOK(): void
     {
         $dispatcher = simpleDispatcher(function (\FastRoute\RouteCollector $r) {
             $r->get('/users/{name}', 'listUsers');
@@ -59,10 +59,10 @@ class FastRouteTest extends TestCase
             },
         ], $request);
 
-        $this->assertEquals('listUsersalice', (string) $response->getBody());
+        self::assertEquals('listUsersalice', (string) $response->getBody());
     }
 
-    public function testAccent()
+    public function testAccent(): void
     {
         $dispatcher = simpleDispatcher(function (\FastRoute\RouteCollector $r) {
             $r->get('/hello/accentué', 'OK');
@@ -77,10 +77,10 @@ class FastRouteTest extends TestCase
             },
         ], $request);
 
-        $this->assertEquals('OK', (string) $response->getBody());
+        self::assertEquals('OK', (string) $response->getBody());
     }
 
-    public function testFastRouteCustomAttribute()
+    public function testFastRouteCustomAttribute(): void
     {
         $dispatcher = simpleDispatcher(function (\FastRoute\RouteCollector $r) {
             $r->get('/users', 'listUsers');
@@ -95,6 +95,6 @@ class FastRouteTest extends TestCase
             },
         ], $request);
 
-        $this->assertEquals('listUsers', (string) $response->getBody());
+        self::assertEquals('listUsers', (string) $response->getBody());
     }
 }

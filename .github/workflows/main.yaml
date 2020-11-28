@@ -76,6 +76,9 @@ jobs:
             - name: "Coding Standard"
               run: "composer cs"
 
+            - name: "PHPStan"
+              run: "composer phpstan"
+
     tests:
         name: "Tests"
         runs-on: "${{ matrix.operating-system }}"
