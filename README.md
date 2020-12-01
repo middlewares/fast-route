@@ -2,8 +2,7 @@
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE)
-[![Build Status][ico-travis]][link-travis]
-[![Quality Score][ico-scrutinizer]][link-scrutinizer]
+![Testing][ico-ga]
 [![Total Downloads][ico-downloads]][link-downloads]
 
 Middleware to use [FastRoute](https://github.com/nikic/FastRoute) for handler discovery.
@@ -94,11 +93,9 @@ The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
 
 [ico-version]: https://img.shields.io/packagist/v/middlewares/fast-route.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/middlewares/fast-route/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/g/middlewares/fast-route.svg?style=flat-square
+[ico-ga]: https://github.com/middlewares/fast-route/workflows/testing/badge.svg
 [ico-downloads]: https://img.shields.io/packagist/dt/middlewares/fast-route.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/middlewares/fast-route
-[link-travis]: https://travis-ci.org/middlewares/fast-route
 [link-scrutinizer]: https://scrutinizer-ci.com/g/middlewares/fast-route
 [link-downloads]: https://packagist.org/packages/middlewares/fast-route
