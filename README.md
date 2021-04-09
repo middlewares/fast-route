@@ -81,7 +81,7 @@ $dispatcher = new Dispatcher([
     (new Middlewares\FastRoute($dispatcher))->attribute('route'),
 
     //Execute the route handler
-    (new Middlewares\RequestHandler())->attribute('route')
+    (new Middlewares\RequestHandler())->handlerAttribute('route')
 ]);
 ```
 
