@@ -19,6 +19,12 @@ class FastRoute implements MiddlewareInterface
     private $router;
 
     /**
+     * @var bool
+     */
+    private $continueOnNotFound = false;
+
+
+    /**
      * @var string Attribute name for handler reference
      */
     private $attribute = 'request-handler';
@@ -35,6 +41,16 @@ class FastRoute implements MiddlewareInterface
     {
         $this->router = $router;
         $this->responseFactory = $responseFactory ?: Factory::getResponseFactory();
+    }
+
+    /**
+     * Configure whether to continue with next handler if route is not found.
+     */
+    public function continueOnNotFound(bool $continueOnNotFound = true): self
+    {
+        $this->continueOnNotFound = $continueOnNotFound;
+
+        return $this;
     }
 
     /**
@@ -55,6 +71,10 @@ class FastRoute implements MiddlewareInterface
         $route = $this->router->dispatch($request->getMethod(), rawurldecode($request->getUri()->getPath()));
 
         if ($route[0] === Dispatcher::NOT_FOUND) {
+            if ($this->continueOnNotFound) {
+                return $handler->handle($request);
+            }
+
             return $this->responseFactory->createResponse(404);
         }
 

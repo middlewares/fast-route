@@ -26,6 +26,25 @@ class FastRouteTest extends TestCase
         $this->assertEquals(404, $response->getStatusCode());
     }
 
+    public function testFastRouteContinueOnNotFound()
+    {
+        $dispatcher = simpleDispatcher(function (\FastRoute\RouteCollector $r) {
+            $r->get('/users', 'listUsers');
+        });
+
+        $request = Factory::createServerRequest('GET', '/posts');
+
+        $response = Dispatcher::run([
+            (new FastRoute($dispatcher))->continueOnNotFound(),
+            function ($request) {
+                echo 'Hello from next handler';
+            },
+        ], $request);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('Hello from next handler', (string) $response->getBody());
+    }
+
     public function testFastRouteNotAllowed()
     {
         $dispatcher = simpleDispatcher(function (\FastRoute\RouteCollector $r) {
