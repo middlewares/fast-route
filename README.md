@@ -25,7 +25,7 @@ You may also want to install [middlewares/request-handler](https://packagist.org
 
 ## Example
 
-This example uses [middleware/request-handler](https://github.com/middlewares/request-handler) to execute the route handler:
+This example uses [middlewares/request-handler](https://github.com/middlewares/request-handler) to execute the route handler:
 
 ```php
 //Create the router dispatcher
