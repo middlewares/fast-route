@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace Middlewares\Tests;
 
+use FastRoute\RouteCollector;
 use function FastRoute\simpleDispatcher;
 use Middlewares\FastRoute;
 use Middlewares\Utils\Dispatcher;
@@ -11,9 +12,9 @@ use PHPUnit\Framework\TestCase;
 
 class FastRouteTest extends TestCase
 {
-    public function testFastRouteNotFound()
+    public function testFastRouteNotFound(): void
     {
-        $dispatcher = simpleDispatcher(function (\FastRoute\RouteCollector $r) {
+        $dispatcher = simpleDispatcher(function (RouteCollector $r) {
             $r->get('/users', 'listUsers');
         });
 
@@ -26,9 +27,9 @@ class FastRouteTest extends TestCase
         $this->assertEquals(404, $response->getStatusCode());
     }
 
-    public function testFastRouteNotAllowed()
+    public function testFastRouteNotAllowed(): void
     {
-        $dispatcher = simpleDispatcher(function (\FastRoute\RouteCollector $r) {
+        $dispatcher = simpleDispatcher(function (RouteCollector $r) {
             $r->get('/users', 'listUsers');
             $r->post('/users', 'createUser');
         });
@@ -43,9 +44,9 @@ class FastRouteTest extends TestCase
         $this->assertEquals('GET, POST', $response->getHeaderLine('Allow'));
     }
 
-    public function testFastRouteOK()
+    public function testFastRouteOK(): void
     {
-        $dispatcher = simpleDispatcher(function (\FastRoute\RouteCollector $r) {
+        $dispatcher = simpleDispatcher(function (RouteCollector $r) {
             $r->get('/users/{name}', 'listUsers');
         });
 
@@ -62,9 +63,9 @@ class FastRouteTest extends TestCase
         $this->assertEquals('listUsersalice', (string) $response->getBody());
     }
 
-    public function testAccent()
+    public function testAccent(): void
     {
-        $dispatcher = simpleDispatcher(function (\FastRoute\RouteCollector $r) {
+        $dispatcher = simpleDispatcher(function (RouteCollector $r) {
             $r->get('/hello/accentué', 'OK');
         });
 
@@ -80,9 +81,9 @@ class FastRouteTest extends TestCase
         $this->assertEquals('OK', (string) $response->getBody());
     }
 
-    public function testFastRouteCustomAttribute()
+    public function testFastRouteCustomAttribute(): void
     {
-        $dispatcher = simpleDispatcher(function (\FastRoute\RouteCollector $r) {
+        $dispatcher = simpleDispatcher(function (RouteCollector $r) {
             $r->get('/users', 'listUsers');
         });
 
