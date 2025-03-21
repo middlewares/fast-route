@@ -31,7 +31,7 @@ class FastRoute implements MiddlewareInterface
     /**
      * Set the Dispatcher instance and optionally the response factory to return the error responses.
      */
-    public function __construct(Dispatcher $router, ResponseFactoryInterface $responseFactory = null)
+    public function __construct(Dispatcher $router, ?ResponseFactoryInterface $responseFactory = null)
     {
         $this->router = $router;
         $this->responseFactory = $responseFactory ?: Factory::getResponseFactory();
